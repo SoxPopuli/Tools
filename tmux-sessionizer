@@ -1,0 +1,13 @@
+#!/bin/bash
+
+directories="
+    ${HOME}/Code
+    ${HOME}/Documents
+"
+projects=$(find ${directories} -maxdepth 1 -type d)
+
+selected=$(printf '%s\n' ${projects} | fzf)
+
+name=$(basename ${selected})
+
+tmux new-session -c "${selected}" -s "${name}" -d
