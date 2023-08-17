@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e #exit on error
 
 nested_directories="
     ${HOME}/Code
@@ -14,18 +13,18 @@ directories="
 projects=$(find ${directories} -maxdepth 1 -type d 2> /dev/null)
 nested_projects=$(find ${nested_directories} -mindepth 2 -maxdepth 2 -type d 2> /dev/null)
 
+#exit on error, but only after find
+# set -e 
+
 combined="${projects}
 ${nested_projects}"
 
 selected=$(printf '%s\n' ${combined} | fzf)
 
 name=$(basename ${selected})
-
 replaced_name=$(echo ${name} | sed 's/\./_/g')
 
-
-if [[ $(tmux has-session -t "${replaced_name}") -gt 0 ]]
-then
+if ! tmux has-session -t "${replaced_name}" 2> /dev/null; then
     tmux new-session -c "${selected}" -s "${replaced_name}" -d
 fi
 
