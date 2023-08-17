@@ -23,5 +23,10 @@ name=$(basename ${selected})
 
 replaced_name=$(echo ${name} | sed 's/\./_/g')
 
-tmux new-session -c "${selected}" -s "${replaced_name}" -d -A
+
+if [[ $(tmux has-session -t "${replaced_name}") -gt 0 ]]
+then
+    tmux new-session -c "${selected}" -s "${replaced_name}" -d
+fi
+
 tmux switch -t "${replaced_name}"
