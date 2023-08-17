@@ -21,4 +21,7 @@ selected=$(printf '%s\n' ${combined} | fzf)
 
 name=$(basename ${selected})
 
-tmux new-session -c "${selected}" -s "${name}" -d
+replaced_name=$(echo ${name} | sed 's/\./_/g')
+
+tmux new-session -c "${selected}" -s "${replaced_name}" -d -A
+tmux switch -t "${replaced_name}"
