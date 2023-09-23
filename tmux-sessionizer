@@ -28,4 +28,8 @@ if ! tmux has-session -t "${replaced_name}" 2> /dev/null; then
     tmux new-session -c "${selected}" -s "${replaced_name}" -d
 fi
 
-tmux switch -t "${replaced_name}"
+if [[ -z $TMUX ]]; then
+    tmux attach -t "${replaced_name}"
+else
+    tmux switch -t "${replaced_name}"
+fi
