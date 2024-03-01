@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+
+export XKB_DEFAULT_OPTIONS="caps:swapescape"
+
+WIDTH=3840
+HEIGHT=2160
+FPS=60
+
+gamescope -W $WIDTH -H $HEIGHT -r $FPS -- "$@"
